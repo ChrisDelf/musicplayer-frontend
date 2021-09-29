@@ -7,62 +7,37 @@ import {
   Redirect
 } from 'react-router-dom';
 
-import { ThemeProvider } from 'pcln-design-system';
+import { ThemeProvider, Button } from 'pcln-design-system';
 
 import './App.css';
 
 
 // importing components
 import Homepage from './components/homepage.js';
-
+import MenuBar from './components/menubar/menubar.js';
 export const theme = {
-primary: {
-    lightGray: '#F9FBFC',
-    darkGray: '#EEEEEF',
-    gray: '#dadada'
-  },
-  secondary: {
-    darkBlue: '#282E74',
-    lightBlue: '#c3ccfa',
-    blue: '#F9FBFC',
-    darkTeal: '#3D689E',
-    lightTeal: '#6B95BD'
-  },
-  navbar: {
-    linkColor: 'yellow'
-  },
   palette: {
-    red: '#F22222',
-    blue: '#1337F1',
-    yellow: '#FFF500',
-    lightPink: '#FFCCCC',
-    orange: '#FFAA00',
-    deepPink: '#FF0099',
-    green: '#00AA00',
-    black: '#001833',
-    plum: '#EECCFF',
-    rebeccaPurple: '#7700BB',
-    gray: '#C4C4C4'
-  },
-  darkPalette: {
-    red: '#970c0c',
-    blue: '#102074',
-    yellow: '#ff9a00',
-    lightPink: '#f37f83',
-    orange: '#c47019',
-    deepPink: '#a70065',
-    green: '#006400',
-    black: '#0454a7',
-    plum: '#cb6ae7',
-    rebeccaPurple: '#3a0057',
-    gray: '#656565'
-  }
+    primary: {
+      base: '#39A0ED',
+      dark: '#32322C',
+      light: '#f8f8ff',
+    },
+    secondary: {
+      light: '#f8f8ff',
+      base: '#36F1CD',
+      dark: '#12C4A3',
+
+    },
+
+    }
 };
 
 
 function App() {
+  
   return (
     <ThemeProvider theme={theme}>
+      <MenuBar />
       <Router>
         <Route exact path="/" component={Homepage} />
 
