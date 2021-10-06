@@ -1,5 +1,5 @@
 import React from 'react';
-
+import styled, { ThemeProvider } from 'styled-components';
 import {
   BrowserRouter as Router,
   Route,
@@ -7,7 +7,6 @@ import {
   Redirect
 } from 'react-router-dom';
 
-import { ThemeProvider, Button } from 'pcln-design-system';
 
 import './App.css';
 
@@ -15,8 +14,9 @@ import './App.css';
 // importing components
 import Homepage from './components/homepage.js';
 import MenuBar from './components/menubar/menubar.js';
-export const theme = {
-  palette: {
+
+const theme = {
+  colors: {
     primary: {
       base: '#39A0ED',
       dark: '#32322C',
@@ -28,20 +28,31 @@ export const theme = {
       dark: '#12C4A3',
 
     },
+  }
 
-    }
+
 };
 
+ const Container = styled.div`
+  background-color: ${props => props.theme.colors.primary.light};
+  align-items: center;
+  height: 100vh;
+  .buttonContainer {
+    justify-content: center;
+  }
+`;
 
 function App() {
-  
+
   return (
     <ThemeProvider theme={theme}>
-      <MenuBar />
-      <Router>
-        <Route exact path="/" component={Homepage} />
+      <Container>
+        <MenuBar />
+        <Router>
+          <Route exact path="/" component={Homepage} />
 
-      </Router>
+        </Router>
+      </Container>
     </ThemeProvider>
   )
 }

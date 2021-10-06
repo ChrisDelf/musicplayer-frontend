@@ -1,5 +1,5 @@
 export const types = {
-  POOPERS: "POOP"
+  CREATE_PLAYLIST: `CREATE_PLAYLIST`,
 }
 
 
