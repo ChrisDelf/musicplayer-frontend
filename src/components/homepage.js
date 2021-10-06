@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Playlists from './playlist/playlist';
+import MediaPlayer from './mediaPlayer/mediaPlayers';
+
 const Container = styled.div`
   justify-items: center;
   display: flex;
@@ -22,6 +24,7 @@ const Homepage = (props) => {
 
     <Container>
       <Playlists />
+      <MediaPlayer />
     </Container>
 
 
