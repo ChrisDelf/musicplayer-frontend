@@ -3,11 +3,11 @@ import styled from 'styled-components';
 export const Container = styled.div`
   justify-items: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
- 
+  background-color: ${props => props.theme.colors.secondary.base};
   align-items: center;
-  height: 100vh;
+  
   .buttonContainer {
     justify-content: center;
   }
@@ -33,3 +33,23 @@ export const Container = styled.div`
     height: 70%;
   }
 `;
+
+
+//export const Button = styled.button`
+  
+//  color=${props => props.theme.colors.primary.light}
+//  background-color: ${props => props.theme.colors.primary.base}
+
+
+
+//`
+
+  
+
+
+
+
+
+
+
+
