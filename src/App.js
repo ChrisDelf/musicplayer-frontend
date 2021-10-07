@@ -13,7 +13,7 @@ import './App.css';
 
 // importing components
 import Homepage from './components/homepage.js';
-import MenuBar from './components/menubar/menubar.js';
+import DownLoader from './components/downloader/downloader.js'
 
 const theme = {
   colors: {
@@ -33,7 +33,7 @@ const theme = {
 
 };
 
- const Container = styled.div`
+const Container = styled.div`
   background-color: ${props => props.theme.colors.primary.light};
   align-items: center;
   height: 100vh;
@@ -46,13 +46,14 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container>
-        <MenuBar />
+     
         <Router>
-          <Route exact path="/" component={Homepage} />
-
+          <Switch>
+            <Route exact path="/" component={Homepage} />
+            <Route exact path="/downloader/" component={DownLoader} />
+          </Switch>
         </Router>
-      </Container>
+     
     </ThemeProvider>
   )
 }

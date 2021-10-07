@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import {Container} from './menubarStyle';
+import { Container } from './menubarStyle';
 
 const Button = styled.button`
   
@@ -11,29 +11,24 @@ const Button = styled.button`
 
 
 
-const MenuBar = (props) => {
-
-  //const MenuContainer = styled(Container)`
-  //  background-color: ${getPrimaryColor(`darkBlue`)}
-
-  //
-  //  `
+const MenuBar = props => {
 
 
-  
+
+
   return (
 
     <Container>
-        <Button >Home</Button>
-        <Button>Playlist</Button>
-        <Button>Likes</Button>
-        <Button>Downloader</Button>
-        <div>Search
-          <input
-            id='text'
-            name='song'
-            defualtValue='Song name here' /></div>
-        
+      <Button onClick={() => props.history.push("/")} >Home</Button>
+      <Button>Playlist</Button>
+      <Button>Likes</Button>
+      <Button onClick={() => props.history.push("/downloader/")}>Downloader</Button>
+      <div>Search
+        <input
+          id='text'
+          name='song'
+          defualtValue='Song name here' /></div>
+
     </Container>
 
   )
