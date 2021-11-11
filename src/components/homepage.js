@@ -33,7 +33,7 @@ const Homepage = (props) => {
       <Container>
         <MenuBar history = {props.history}/>
       </Container>
-      <Playlists />
+  
       <MediaPlayer />
 
     </MainCont>

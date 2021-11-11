@@ -33,15 +33,6 @@ const theme = {
 
 };
 
-const Container = styled.div`
-  background-color: ${props => props.theme.colors.primary.light};
-  align-items: center;
-  height: 100vh;
-  .buttonContainer {
-    justify-content: center;
-  }
-`;
-
 function App() {
 
   return (
