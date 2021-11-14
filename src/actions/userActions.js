@@ -14,7 +14,7 @@ const {
   = types;
 
 
-const api = "http://localhost:8080/";
+const api = "http://localhost:8080/api/user/";
 
 export const createPlaylist = (name) => dispatch => {
 
@@ -28,14 +28,17 @@ export const createPlaylist = (name) => dispatch => {
 export const loadRecentlyAdded = () => dispatch => {
 
   dispatch({ type: START_RECENTLY_ADDED })
-
+  
   axios
-    .get('${api}recentlyAdded')
+    .get(`${api}musiclist`)
     .then(res => {
+      console.log(res)
       dispatch({ type: SUCCESS_RECENTLY_ADDED, payload: res.data })
+      return true
     })
     .catch(err => {
       dispatch({ type: FAILURE_RECENTLY_ADDED, payload: err })
+      return false
     })
 }
 
@@ -43,7 +46,7 @@ export const playSelectedSong = (id) => dispatch => {
   dispatch({ type: START_SELECTED_SONG })
 
   axios
-    .get('${api}audio/audios/${id}')
+    .get(`${api}audio/audios/${id}`)
     .then(res => {
       dispatch({ type: SUCCESS_SELECTED_SONG, payload: res.data })
 

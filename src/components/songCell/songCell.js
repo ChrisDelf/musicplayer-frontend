@@ -7,15 +7,17 @@ const Cell = styled.div`
   justify-content: center;
   background-color: ${props => props.theme.colors.secondary.base};
   align-items: center;
+  magrin: 4px;
+  border-style: groove;
 
 `
 
 const SongCell = (props) => {
-  const { name, date, length, history } = props;
+  const {song} = props
 
-  return (
+   return (
     <Cell>
-      {name}{length}<button>P</button><button>D</button>
+      <h>{song.name}</h><button>P</button><button>D</button>
     </Cell>
   )
 
