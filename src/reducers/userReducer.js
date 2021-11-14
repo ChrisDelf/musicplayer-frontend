@@ -13,7 +13,9 @@ const initialState = {
   userName: 'anon',
   userId: '',
   playlists: ['list1', 'list2', 'list3'],
-  selectedSong: { name: null, length: 0 }
+  selectedSong: { name: null, length: 0 },
+  recentlyAdded: null,
+  isLoading: false,
 }
 
 
@@ -21,7 +23,40 @@ const userReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case CREATE_PLAYLIST:
       return { ...state, playlists: payload }
-  switch (type) {}
+
+    case START_RECENTLY_ADDED:
+      return {
+        ...state,
+        isLoading: true
+      }
+    case SUCCESS_RECENTLY_ADDED:
+      return {
+        ...state,
+        isLoading: false,
+        recentlyAdded: payload
+      }
+    case FAILURE_RECENTLY_ADDED:
+      return {
+        ...state,
+        isLoading: false,
+      }
+    case START_SELECTED_SONG:
+      return {
+        ...state,
+        isLoading: true,
+      }
+    case SUCCESS_SELECTED_SONG:
+      return {
+        ...state,
+        isLoading: false,
+        selectedSong: payload.data
+      }
+    case FAILURE_SELECTED_SONG:
+      return {
+        ...state,
+        isLoading: false,
+      }
+
     default:
       return state;
 
