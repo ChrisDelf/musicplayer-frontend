@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Playlists from './playlist/playlist';
@@ -26,29 +26,31 @@ const MainCont = styled.div`
 `;
 
 const Homepage = (props) => {
+  const [song, setSong] = useState([])
+  useEffect(() => {
+    setSong(props.playingSong)
 
-
-
+  }, [props.playingSong])
 
   return (
     <>
-    <MainCont>
-      <Container>
-        <MenuBar history={props.history} />
-      </Container>
-      <MusicList/>
+      <MainCont>
+        <Container>
+          <MenuBar history={props.history} />
+        </Container>
+        <MusicList />
 
-      <figure>
-        <figcaption>Music Title goes here</figcaption>
-        <audio
-          controls
-          autoplay
-          src="mp3 source goes here">
-          Your browser does not support the
-          <code>audio</code> element.
-        </audio>
-      </figure>
-    </MainCont>
+        <figure>
+          <figcaption>Music Title goes here</figcaption>
+          <audio
+            controls
+            autoplay
+            src={song}>
+            Your browser does not support the
+            <code>audio</code> element.
+          </audio>
+        </figure>
+      </MainCont>
     </>
   )
 };
@@ -56,6 +58,7 @@ const Homepage = (props) => {
 const mapStateToProps = state => {
   return {
     playlists: state.userReducer.playlist,
+    playingSong: state.userReducer.playingSong,
 
   }
 };

@@ -32,7 +32,6 @@ export const loadRecentlyAdded = () => dispatch => {
   axios
     .get(`${api}musiclist`)
     .then(res => {
-      console.log(res)
       dispatch({ type: SUCCESS_RECENTLY_ADDED, payload: res.data })
       return true
     })
@@ -46,8 +45,9 @@ export const playSelectedSong = (id) => dispatch => {
   dispatch({ type: START_SELECTED_SONG })
 
   axios
-    .get(`${api}audio/audios/${id}`)
+    .get(`http://localhost:8080/audio/audios/${id}`)
     .then(res => {
+      console.log(res)
       dispatch({ type: SUCCESS_SELECTED_SONG, payload: res.data })
 
     })
