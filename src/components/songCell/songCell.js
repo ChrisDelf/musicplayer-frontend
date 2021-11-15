@@ -1,6 +1,19 @@
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import {playSelectedSong} from '../../actions/userActions'
 
 const Cell = styled.div`
+  justify-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: ${props => props.theme.colors.secondary.base};
+  align-items: center;
+  magrin: 4px;
+  border-style: groove;
+
+`
+const ButtonContainer = styled.div`
   justify-items: center;
   display: flex;
   flex-direction: row;
@@ -13,15 +26,25 @@ const Cell = styled.div`
 `
 
 const SongCell = (props) => {
-  const {song} = props
+  const { song } = props
 
-   return (
+  return (
     <Cell>
-      <h>{song.name}</h><button>P</button><button>D</button>
+      <h>{song.name}</h>
+      <ButtonContainer>
+        <button onClick = {() => {props.playSelectedSong(song.id)}}>P</button>
+        <button>D</button>
+    </ButtonContainer>
     </Cell>
   )
 
 }
 
+const mapStateToProps = state => {
+  return{
+    playingSong: state.userReducer.song,
+  }
+}
 
-export default SongCell;
+
+export default connect(mapStateToProps, {playSelectedSong})(SongCell);
