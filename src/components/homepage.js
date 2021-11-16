@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Playlists from './playlist/playlist';
 import MenuBar from './menubar/menubar.js';
 import MusicList from './musicList/musicList.js';
+import AudioPlayer from './audioPlayer/audioPlayer.js'
 
 
 const Container = styled.div`
@@ -26,11 +27,10 @@ const MainCont = styled.div`
 `;
 
 const Homepage = (props) => {
-  const [song, setSong] = useState([])
   useEffect(() => {
-    setSong(props.playingSong)
 
-  }, [props.playingSong])
+
+  }, [props.selectedSong])
 
   return (
     <>
@@ -39,18 +39,8 @@ const Homepage = (props) => {
           <MenuBar history={props.history} />
         </Container>
         <MusicList />
-
-        <figure>
-          <figcaption>Music Title goes here</figcaption>
-          <audio
-            controls
-            autoplay
-            src={song}>
-            Your browser does not support the
-            <code>audio</code> element.
-          </audio>
-        </figure>
       </MainCont>
+      <AudioPlayer url={props.selectedSong} />
     </>
   )
 };
@@ -58,7 +48,7 @@ const Homepage = (props) => {
 const mapStateToProps = state => {
   return {
     playlists: state.userReducer.playlist,
-    playingSong: state.userReducer.playingSong,
+    selectedSong: state.userReducer.selectedSong,
 
   }
 };
