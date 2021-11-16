@@ -49,7 +49,7 @@ const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isLoading: false,
-        selectedSong: payload.data
+        selectedSong: payload
       }
     case FAILURE_SELECTED_SONG:
       return {
