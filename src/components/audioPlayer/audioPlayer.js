@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import ReactSlider from 'react-slider'
 
 const Container = styled.div`
   justify-items: center;
@@ -13,20 +14,34 @@ const Container = styled.div`
 `
 
 const AudioPlayer = (props) => {
+  const [state, setState] = useState({ x: 10, y: 10 })
   const [audio, setAudio] = useState(new Audio(props.selectedSong));
   const [playing, setPlaying] = useState(false);
   const [duration, setDuration] = useState();
   const [currentTime, setCurrentTime] = useState();
   const [canvasWidth, setCanvasWidth] = useState(500);
   const [canvas, setCanvas] = useState();
+ 
+  //Shap Constructor
+  function Shape(x,y,w,h,fill)
+  {
+  this.x = x;
+  this.y = y;
+  this.w = w;
+  this.h = h;
+  this.fill = fill;
+  }
+
 
   const toggle = () => setPlaying(!playing);
 
+
+  // grabbing the canvas element first
   window.onload = function() {
     setCanvas(document.getElementById("progress").getContext('2d'))
-
+  
   }
-
+  // converting the time into minutes and seconds
   const convertElapsedTime = (inputSeconds) => {
     var seconds = Math.floor(inputSeconds % 60)
     if (seconds < 10) {
@@ -38,29 +53,38 @@ const AudioPlayer = (props) => {
 
   }
 
+
+  // updating the progress bar and timer
   const updateBar = () => {
-    console.log("hello", canvasWidth)
     canvas.clearRect(0, 0, canvasWidth, 50)
     canvas.fillStyle = "#000000";
     canvas.fillRect(0, 0, canvasWidth, 50)
 
     var updateCurrentT = audio.currentTime
     var updateDuration = audio.duration
-    console.log(updateCurrentT, updateDuration)
     if (updateCurrentT == updateDuration) {
 
       setPlaying(true)
     }
-    document.getElementById("current-time").innerHTML = convertElapsedTime(currentTime)
+    document.getElementById("current-time").innerHTML = convertElapsedTime(updateCurrentT)
 
     var precentage = updateCurrentT / updateDuration
     var u_progress = (canvasWidth * precentage)
-    canvas.fillStyle = "#FF0000"
+    canvas.fillStyle = "#2f4f4f"
     canvas.fillRect(0, 0, u_progress, 50)
+
+ //  var imageData = canvas.createImageData(width)
+
 
 
   }
+  // drawing our drag object onto the progress canvas
+  const drawSelector = (updateCurrentT, u_progress) => {
+    //canvas.push(new Shape()
 
+  }
+
+  // when the song if fully loaded play the song
   audio.onloadedmetadata = (event) => {
     setPlaying(true)
     setDuration(audio.duration)
@@ -70,13 +94,14 @@ const AudioPlayer = (props) => {
 
 
   }
-
+  // during song we want to update our timer and progress bar
   audio.addEventListener('timeupdate', (() => {
     if (canvas != null) {
       updateBar()
     }
   }))
 
+  // when a song pause the current audio
   useEffect(() => {
     setPlaying(false)
     audio.pause();
@@ -85,7 +110,7 @@ const AudioPlayer = (props) => {
     [props.selectedSong]
   );
 
-
+  // plays when the play button is played
   useEffect(() => {
     playing ? audio.play() : audio.pause();
   },
@@ -95,7 +120,7 @@ const AudioPlayer = (props) => {
 
 
 
-
+  // when the song ends stop the song
   useEffect(() => {
     audio.addEventListener('ended', () => setPlaying(false));
     return () => {
@@ -108,11 +133,12 @@ const AudioPlayer = (props) => {
 
     <Container>
       <button onClick={toggle}> {playing ? "Pause" : "Play"}</button>
-      <canvas id="progress" width="500" height="100"></canvas>
+      <canvas id="progress" width="500" height="100">
+    
+      </canvas>
 
       <span id="current-time"></span>/
       <span id="duration"></span>
-
     </Container>);
 }
 
