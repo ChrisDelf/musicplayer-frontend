@@ -22,9 +22,9 @@ const AudioPlayer = (props) => {
 
   const toggle = () => setPlaying(!playing);
 
- window.onload = function () {
+  window.onload = function() {
     setCanvas(document.getElementById("progress").getContext('2d'))
-    
+
   }
 
   const convertElapsedTime = (inputSeconds) => {
@@ -39,13 +39,14 @@ const AudioPlayer = (props) => {
   }
 
   const updateBar = () => {
+    console.log("hello", canvasWidth)
     canvas.clearRect(0, 0, canvasWidth, 50)
-    canvas.fillStyle = `000`;
+    canvas.fillStyle = "#000000";
     canvas.fillRect(0, 0, canvasWidth, 50)
 
     var updateCurrentT = audio.currentTime
     var updateDuration = audio.duration
-
+    console.log(updateCurrentT, updateDuration)
     if (updateCurrentT == updateDuration) {
 
       setPlaying(true)
@@ -70,11 +71,11 @@ const AudioPlayer = (props) => {
 
   }
 
-  audio.progress = (event) => {
-    console.log("sdfsdf")
-    updateBar()
-
-  }
+  audio.addEventListener('timeupdate', (() => {
+    if (canvas != null) {
+      updateBar()
+    }
+  }))
 
   useEffect(() => {
     setPlaying(false)
@@ -108,9 +109,9 @@ const AudioPlayer = (props) => {
     <Container>
       <button onClick={toggle}> {playing ? "Pause" : "Play"}</button>
       <canvas id="progress" width="500" height="100"></canvas>
-      
-        <span id="current-time"></span>/
-        <span id="duration"></span>
+
+      <span id="current-time"></span>/
+      <span id="duration"></span>
 
     </Container>);
 }
@@ -119,11 +120,11 @@ const AudioPlayer = (props) => {
 
 const mapStateToProps = state => {
   return {
-        playlists: state.userReducer.playlist,
-      selectedSong: state.userReducer.selectedSong,
+    playlists: state.userReducer.playlist,
+    selectedSong: state.userReducer.selectedSong,
 
   }
 };
 
 
-      export default connect(mapStateToProps, {})(AudioPlayer)
+export default connect(mapStateToProps, {})(AudioPlayer)
