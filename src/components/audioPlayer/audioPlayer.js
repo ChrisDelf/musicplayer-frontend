@@ -21,6 +21,9 @@ const AudioPlayer = (props) => {
   const [currentTime, setCurrentTime] = useState();
   const [canvasWidth, setCanvasWidth] = useState(500);
   const [canvas, setCanvas] = useState();
+  const [canLeft, setCanLeft] = useState();
+  const [canTop, setCanTop] = useState();
+  const [canElem, setCanElem] = useState([]);
  
   //Shap Constructor
   function Shape(x,y,w,h,fill)
@@ -37,10 +40,24 @@ const AudioPlayer = (props) => {
 
 
   // grabbing the canvas element first
+  // also going to grab all of the dom data need for the calculations for the onClick event
   window.onload = function() {
     setCanvas(document.getElementById("progress").getContext('2d'))
-  
+  //  setCanLeft(canvas.offsetLeft + canvas.clientLeft)
+  //  setCanTop(canvas.offsetTop + canvas.clientTop)
+    
   }
+
+
+
+  // creating a on click on for the canvas element
+ // const loadOnClick = (event) => {
+  //console.log(event.clientX, event.clientY)
+ // return null
+//  }
+
+ // canvas.onclick = loadOnClick()
+
   // converting the time into minutes and seconds
   const convertElapsedTime = (inputSeconds) => {
     var seconds = Math.floor(inputSeconds % 60)
