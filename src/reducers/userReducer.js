@@ -6,7 +6,10 @@ const { CREATE_PLAYLIST,
   FAILURE_RECENTLY_ADDED,
   START_SELECTED_SONG,
   SUCCESS_SELECTED_SONG,
-  FAILURE_SELECTED_SONG } = types;
+  FAILURE_SELECTED_SONG,
+  SET_PLAYING_TRUE,
+  SET_PLAYING_FALSE
+} = types;
 
 const initialState = {
   token: '',
@@ -16,6 +19,7 @@ const initialState = {
   selectedSong: { name: null, length: 0 },
   recentlyAdded: null,
   isLoading: false,
+  playing: false,
 }
 
 
@@ -55,6 +59,17 @@ const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isLoading: false,
+      }
+    case SET_PLAYING_FALSE:
+      return {
+        ...state,
+        playing: payload
+      }
+    case SET_PLAYING_TRUE:
+      return {
+        ...state,
+        playing: payload
+
       }
 
     default:
