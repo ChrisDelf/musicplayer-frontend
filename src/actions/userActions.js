@@ -9,7 +9,9 @@ const {
   FAILURE_RECENTLY_ADDED,
   START_SELECTED_SONG,
   SUCCESS_SELECTED_SONG,
-  FAILURE_SELECTED_SONG
+  FAILURE_SELECTED_SONG,
+  SET_PLAYING_TRUE,
+  SET_PLAYING_FALSE
 }
   = types;
 
@@ -43,4 +45,16 @@ export const loadRecentlyAdded = () => dispatch => {
 export const playSelectedSong = (id) => dispatch => {
   let res = `http://localhost:8080/audio/audios/${id}`
   dispatch({ type: SUCCESS_SELECTED_SONG, payload: res})
+}
+
+export const setPlaying = (state) => dispatch => {
+ if (state == false)
+  {
+    dispatch({type: SET_PLAYING_FALSE, payload: state})
+
+  }
+  else
+  {
+    dispatch({type: SET_PLAYING_TRUE, payload: state})
+  }
 }
