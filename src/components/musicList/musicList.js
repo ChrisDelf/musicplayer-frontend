@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { loadRecentlyAdded } from '../../actions/userActions'
+import { loadRecentlyAdded} from '../../actions/userActions'
 
 import SongCell from '../songCell/songCell'
 

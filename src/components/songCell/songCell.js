@@ -1,6 +1,7 @@
+import React, {useState} from "react";
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import {playSelectedSong} from '../../actions/userActions'
+import { playSelectedSong, setPlaying } from '../../actions/userActions'
 
 const Cell = styled.div`
   justify-items: center;
@@ -27,24 +28,31 @@ const ButtonContainer = styled.div`
 
 const SongCell = (props) => {
   const { song } = props
+  const [play, setPlay] = useState(false)
+  const toggle = () => {
+    props.playSelectedSong(song.id)
+   // props.setPlaying(!props.playing)
+    setPlay(!play)
+     };
 
   return (
     <Cell>
       <h>{song.name}</h>
       <ButtonContainer>
-        <button onClick = {() => {props.playSelectedSong(song.id)}}>P</button>
+        <button onClick={toggle}> {props.playing ? "Pause" : "Play"}</button>
         <button>D</button>
-    </ButtonContainer>
+      </ButtonContainer>
     </Cell>
   )
 
 }
 
 const mapStateToProps = state => {
-  return{
+  return {
     playingSong: state.userReducer.song,
+    playing: state.userReducer.playing
   }
 }
 
 
-export default connect(mapStateToProps, {playSelectedSong})(SongCell);
+export default connect(mapStateToProps, { playSelectedSong, setPlaying })(SongCell);
