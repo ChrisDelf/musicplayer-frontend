@@ -20,7 +20,7 @@ const ProgressBar = (props) => {
   const [currentTime, setCurrentTime] = useState();
   const [canvasWidth, setCanvasWidth] = useState(500);
   const [canvasContext, setCanvasContext] = useState();
-  const [coordinates, setCoordinates] = useState([])
+  const [coordinates, setCoordinates] = useState([]);
   //const [canvas, setCanvas] = useState();
   const canvasRef = useRef(null);
   const canvas = canvasRef.current;
@@ -28,13 +28,22 @@ const ProgressBar = (props) => {
   //https://medium.com/@martin.crabtree/react-creating-an-interactive-canvas-component-e8e88243baf6 
   const mouseSelectTime = (event) => {
     //  console.log(event)
-    const currentCoordinates = { x: event.clientX, y: event.clientY }
+    const mouseCoordinates = { x: event.clientX, y: event.clientY }
 
-    console.log(currentCoordinates)
+    var canvasLeft = canvas.getBoundingClientRect().left
+
+    var currentWidth = canvas.getBoundingClientRect().width
+    var xDif = (mouseCoordinates.x - canvasLeft)
+
+    var newProgress = xDif / currentWidth
+
+
+
+    updateBar(newProgress)
   }
- 
 
-    audio.addEventListener('timeupdate', (() => {
+
+  audio.addEventListener('timeupdate', (() => {
     setCanvasContext(canvasRef.current.getContext('2d'))
 
     if (canvasContext != null) {
@@ -65,14 +74,24 @@ const ProgressBar = (props) => {
 
   }
   // updating the progress bar and timer
-  const updateBar = () => {
-
+  const updateBar = (mouseClick) => {
+    
     canvasContext.clearRect(0, 0, canvasWidth, 50)
     canvasContext.fillStyle = "#000000";
     canvasContext.fillRect(0, 0, canvasWidth, 50)
-
+  if (mouseClick == null) {
     var updateCurrentT = audio.currentTime
     var updateDuration = audio.duration
+
+  }
+    else {
+    var updateDuration = audio.duration
+    // need to do some math to get a new current time
+    var updatedCurrentT = updateDuration * mouseClick
+    audio.currentTime = updatedCurrentT
+
+    }
+
     if (updateCurrentT == updateDuration) {
 
       props.setPlaying(true)
