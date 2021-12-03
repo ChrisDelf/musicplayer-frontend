@@ -2,7 +2,9 @@ import React, { useRef, useState, useEffect } from "react";
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import ProgressBar from './progressBar';
+import SoundButton from './soundButton';
 import {setPlaying} from '../../actions/userActions'
+
 
 
 
@@ -65,7 +67,7 @@ const AudioPlayer = (props) => {
       <button onClick={toggle}> {props.playing ? "Pause" : "Play"}</button>
 
       <ProgressBar audio={audio} setPlaying = {setPlaying}/>
-
+      <SoundButton audio={audio}/>
          </Container>);
 }
 

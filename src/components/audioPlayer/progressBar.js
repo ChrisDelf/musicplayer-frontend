@@ -21,13 +21,12 @@ const ProgressBar = (props) => {
   const [canvasWidth, setCanvasWidth] = useState(500);
   const [canvasContext, setCanvasContext] = useState();
   const [coordinates, setCoordinates] = useState([]);
-  //const [canvas, setCanvas] = useState();
   const canvasRef = useRef(null);
   const canvas = canvasRef.current;
 
-  //https://medium.com/@martin.crabtree/react-creating-an-interactive-canvas-component-e8e88243baf6 
+
   const mouseSelectTime = (event) => {
-    //  console.log(event)
+
     const mouseCoordinates = { x: event.clientX, y: event.clientY }
 
     var canvasLeft = canvas.getBoundingClientRect().left
