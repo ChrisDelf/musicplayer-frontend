@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import quite from '../../images/quite.png';
-import mute from '../../images/mute.png';
-import loud from '../../images/loud.png';
+import { Icon } from 'semantic-ui-react'
 
 
 
@@ -25,10 +23,8 @@ const ImageCon = styled.img`
     `
 const SoundButton = (props) => {
   const { audio } = props
-  const [soundIcon, setSoundIcon] = useState(quite)
+  const [iconName, setIconName] = useState()
   const [prevVolume, setPrevVolume] = useState()
-  
-  const quiteIcon = quite
 
   const mute = (event) => {
     if (audio.volume > 0) {
@@ -46,30 +42,28 @@ const SoundButton = (props) => {
   }
 
   const volumeIcon = () => {
-    if (audio.volume == 0) {
-      return <ImageCon src={mute} alt="failed to load" onClick={(event) => { mute(event) }} />
+      if (audio.volume == 0) {
+      setIconName('volume off')
     }
-    if (audio.volume < .5) {
-      return <ImageCon src={quite} alt="failed to load" onClick={(event) => { mute(event) }} />
+    else if (audio.volume <= .5) {
+      setIconName('volume down')
+
     }
     else {
-      return <ImageCon src={loud} alt="failed to load" onClick={(event) => { mute(event) }} />
-
+      setIconName('volume up')
     }
-
+    console.log(iconName)
 
   }
+  useEffect(() => {
+    volumeIcon()
+  }, [audio])
 
 
   return (
-    <div>
-      {audio.volume == 0 ? (<ImageCon src={mute} alt="failed to load" onClick={(event) => { mute(event) }} />
-      ) : (
-
-        <ImageCon src={quiteIcon} alt="failed to load" onClick={(event) => { mute(event) }} />
-
-      )}
-    </div>
+    <Icon.Group size='huge'>
+      <Icon size='small' color='black' name={iconName} />
+    </Icon.Group>
   )
 }
 
