@@ -22,27 +22,28 @@ const ImageCon = styled.img`
     height: 40%;
     `
 const SoundButton = (props) => {
-  const { audio } = props
+  const { audio , toggleVolume} = props
   const [iconName, setIconName] = useState()
   const [prevVolume, setPrevVolume] = useState()
 
   const mute = (event) => {
     if (audio.volume > 0) {
       var tempV = audio.volume
-      //   setSoundIcon(mute)
       audio.volume = 0
       setPrevVolume(tempV)
 
     }
     else {
-      //  setSoundIcon(quite)
+
       audio.volume = prevVolume
     }
 
   }
 
+
   const volumeIcon = () => {
-      if (audio.volume == 0) {
+
+    if (audio.volume == 0) {
       setIconName('volume off')
     }
     else if (audio.volume <= .5) {
@@ -52,17 +53,25 @@ const SoundButton = (props) => {
     else {
       setIconName('volume up')
     }
-    console.log(iconName)
+
 
   }
+
   useEffect(() => {
     volumeIcon()
-  }, [audio])
 
+  }, [])
 
   return (
     <Icon.Group size='huge'>
-      <Icon size='small' color='black' name={iconName} />
+      <Icon size='small' color='black' name={iconName} onClick={() => {
+        mute()
+        volumeIcon()
+           }}
+     onMouseOver= {() => {console.log("asdfsa")
+   toggleVolume()
+     }}
+    />
     </Icon.Group>
   )
 }

@@ -40,6 +40,7 @@ const MusicList = (props) => {
         console.log(err)
       }
     }
+    console.log("poop")
     fetchMusic();
   }, [])
 

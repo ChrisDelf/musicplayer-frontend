@@ -36,8 +36,6 @@ const ProgressBar = (props) => {
 
     var newProgress = xDif / currentWidth
 
-
-
     updateBar(newProgress)
   }
 
@@ -51,6 +49,7 @@ const ProgressBar = (props) => {
 
     }
   }))
+
   // converting the time into minutes and seconds
   const convertElapsedTime = (inputSeconds) => {
     var seconds = Math.floor(inputSeconds % 60)
