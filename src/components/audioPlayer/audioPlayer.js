@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import ProgressBar from './progressBar';
 import SoundButton from './soundButton';
-import {setPlaying} from '../../actions/userActions'
+import VolumePopup from './volumePopup';
+import { setPlaying } from '../../actions/userActions'
 
 
 
@@ -24,10 +25,14 @@ const AudioPlayer = (props) => {
   const [currentTime, setCurrentTime] = useState();
   const [canvasWidth, setCanvasWidth] = useState(500);
   const [canvas, setCanvas] = useState();
+  const [isVolumeOpen, setIsVolumeOpen] = useState(false);
   const canvasRef = useRef(null);
 
 
+  const toggleVolume = () => {
+    setIsVolumeOpen(!isVolumeOpen)
 
+  }
 
 
   const toggle = () => props.setPlaying(!props.playing);
@@ -65,10 +70,14 @@ const AudioPlayer = (props) => {
 
     <Container>
       <button onClick={toggle}> {props.playing ? "Pause" : "Play"}</button>
+      <ProgressBar audio={audio} setPlaying={setPlaying} />
+      <SoundButton audio={audio} toggleVolume = {toggleVolume}/>
 
-      <ProgressBar audio={audio} setPlaying = {setPlaying}/>
-      <SoundButton audio={audio}/>
-         </Container>);
+      {isVolumeOpen == true ? (<VolumePopup audio={audio}  />) : (<></>)}
+
+    </Container>
+
+  );
 }
 
 
@@ -83,4 +92,4 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps, {setPlaying})(AudioPlayer)
+export default connect(mapStateToProps, { setPlaying })(AudioPlayer)

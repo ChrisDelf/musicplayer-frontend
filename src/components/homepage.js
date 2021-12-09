@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import Playlists from './playlist/playlist';
+//import Playlists from './playlist/playlist';
 import MenuBar from './menubar/menubar.js';
 import MusicList from './musicList/musicList.js';
 import AudioPlayer from './audioPlayer/audioPlayer.js'
@@ -30,16 +30,16 @@ const Homepage = (props) => {
   useEffect(() => {
 
 
-  }, [props.selectedSong])
+}, [props.selectedSong])
 
   return (
     <>
       <MainCont>
-        <Container>
-          <MenuBar history={props.history} />
-        </Container>
+       <Container>
+         <MenuBar history={props.history} />
+       </Container>
         <MusicList />
-      </MainCont>
+    </MainCont>
       <AudioPlayer url={props.selectedSong} />
     </>
   )
