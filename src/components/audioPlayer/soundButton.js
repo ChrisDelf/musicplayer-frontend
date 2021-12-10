@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Icon } from 'semantic-ui-react'
@@ -25,6 +25,7 @@ const SoundButton = (props) => {
   const { audio , toggleVolume} = props
   const [iconName, setIconName] = useState()
   const [prevVolume, setPrevVolume] = useState()
+  
 
   const mute = (event) => {
     if (audio.volume > 0) {
@@ -60,15 +61,16 @@ const SoundButton = (props) => {
   useEffect(() => {
     volumeIcon()
 
+
   }, [])
 
   return (
-    <Icon.Group size='huge'>
+    <Icon.Group size='large' >
       <Icon size='small' color='black' name={iconName} onClick={() => {
         mute()
         volumeIcon()
            }}
-     onMouseOver= {() => {console.log("asdfsa")
+     onMouseOver= {() => {
    toggleVolume()
      }}
     />
