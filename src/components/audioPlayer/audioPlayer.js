@@ -26,7 +26,8 @@ const AudioPlayer = (props) => {
   const [canvasWidth, setCanvasWidth] = useState(500);
   const [canvas, setCanvas] = useState();
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
-  const canvasRef = useRef(null);
+  const soundButtonRef = useRef(null);
+  const soundButtonPos = soundButtonRef.current
 
 
   const toggleVolume = () => {
@@ -65,15 +66,15 @@ const AudioPlayer = (props) => {
     };
   }, []);
 
-
   return (
 
     <Container>
       <button onClick={toggle}> {props.playing ? "Pause" : "Play"}</button>
       <ProgressBar audio={audio} setPlaying={setPlaying} />
-      <SoundButton audio={audio} toggleVolume = {toggleVolume}/>
-
-      {isVolumeOpen == true ? (<VolumePopup audio={audio}  />) : (<></>)}
+      <div className = "soundButton" ref={soundButtonRef}>
+      <SoundButton audio={audio} toggleVolume={toggleVolume}/>
+      </div>
+      {isVolumeOpen == true ? (<VolumePopup audio={audio} position={soundButtonPos} />) : (<></>)}
 
     </Container>
 
