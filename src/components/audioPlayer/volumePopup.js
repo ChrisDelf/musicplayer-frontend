@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 const PopupBox = styled.div`
-  position: absolute;
-  background: #00000050;
-  width: 300px;
+
+  background: #FF4500;
+  width: 150px;
 
 
  
@@ -14,52 +14,76 @@ const Container = styled.div`
   justify-items: center;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  background-color: ${props => props.theme.colors.secondary.base};
+  justify-content: flex-start;
+  background-color: #000080;
   align-items: center;
 
 `
 const VolumeDiv = styled.div`
     background-color: rgb(233, 233, 233);
-    border-radius: .5rem;
+  
+    
 `
 const BarDiv = styled.div`
-    background-color: rgb(62, 122, 235);
     height: 10px;
-    border-radius: 1rem;
+   
+    background-color: #32cd32;
 `
 
 const VolumePopup = (props) => {
-  const { audio, height, position } = props
-  const [barHeight, setBarHeight] = useState();
+  const { audio } = props
+  const [barWidth, setBarWidth] = useState();
   const [eleLeft, setEleLeft] = useState();
   const [eleWidth, setEleWidth] = useState();
   const [eleBottom, setEleBottom] = useState();
   const [eleheight, setEleHeight] = useState();
+  const [toggle, setToggle] = useState(false)
+  const ref = useRef(null);
+
+  const [popUpPosition, setPopUpPosition] = useState();
+
   // going to create our boundries for our bar
 
   const createContainer = () => {
-    console.log(position.getBoundingClientRect().top, position.getBoundingClientRect().height)
-    setEleHeight(position.getBoundingClientRect().height)
+    setEleWidth(ref.current.clientWidth)
+    setEleLeft(ref.current.getBoundingClientRect().left)
+
+
+    setBarWidth(audio.volume * eleWidth)
+    console.log(eleWidth)
+
+  }
+  const changeVolume = (event) => {
+
+    const mouseCoordinates = { x: event.clientX, y: event.clientY }
+    var xDif = mouseCoordinates.x - eleLeft
+
+    var newVolume = xDif / eleWidth
+
+    updateVolume(newVolume)
+  }
+
+  const updateVolume = (newVolume) => {
+
+    audio.volume = newVolume
+    setToggle(!toggle)
 
 
   }
 
   useEffect(() => {
     createContainer()
-   }, [position])
+  }, [toggle])
 
   return (
-    <PopupBox background="red" style={{ 
-        top: `${position.getBoundingClientRect().top}px`, 
-        left: `${position.getBoundingClientRect().left}px`,
-        width: `${position.getBoundingClientRect().width}px`,
-        bottom: `${-eleheight}px`}}>
-      <Container>
-        <VolumeDiv >
-          <BarDiv style={{ height: `${barHeight}px` }} />
-        </VolumeDiv>
-      </Container>
+    <PopupBox background="red" onClick={(event) => { changeVolume(event) }} >
+      <div ref={ref}>
+        <Container>
+          <VolumeDiv >
+            <BarDiv style={{ width: `${barWidth}px` }} />
+          </VolumeDiv>
+        </Container>
+      </div>
     </PopupBox>
 
   )
