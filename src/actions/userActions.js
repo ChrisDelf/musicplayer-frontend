@@ -16,7 +16,7 @@ const {
   = types;
 
 
-const api = "http://localhost:8080/api/user/";
+const api = "http://localhost:8090/api/user/";
 
 export const createPlaylist = (name) => dispatch => {
 
@@ -43,7 +43,7 @@ export const loadRecentlyAdded = () => dispatch => {
 }
 
 export const playSelectedSong = (id) => dispatch => {
-  let res = `http://localhost:8080/audio/audios/${id}`
+  let res = `http://localhost:8090/audio/audios/${id}`
   dispatch({ type: SUCCESS_SELECTED_SONG, payload: res})
 }
 

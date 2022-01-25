@@ -37,7 +37,7 @@ const SongCell = (props) => {
 
   return (
     <Cell>
-      <h>{song.name}</h>
+      <h>{song.title}</h>
       <ButtonContainer>
         <button onClick={toggle}> {props.playing ? "Pause" : "Play"}</button>
         <button>D</button>
