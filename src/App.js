@@ -3,7 +3,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
+  Routes as Switch,
   Redirect
 } from 'react-router-dom';
 import './App.css';
@@ -38,8 +38,8 @@ function App() {
      
         <Router>
           <Switch>
-            <Route exact path="/" component={Homepage} />
-            <Route exact path="/downloader/" component={DownLoader} />
+            <Route path="/" element={<Homepage/>} />
+            <Route path="/downloader/" element={<DownLoader/>} />
           </Switch>
         </Router>
      
