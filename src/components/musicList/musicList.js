@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { loadRecentlyAdded} from '../../actions/userActions'
-
+import { loadRecentlyAdded } from '../../actions/userActions'
 import SongCell from '../songCell/songCell'
 
 const Container = styled.div`
@@ -29,15 +28,15 @@ const CellsContainer = styled.div`
 `
 
 const MusicList = (props) => {
+
   const [musicList, setMusicList] = useState([]);
   useEffect(() => {
+
     async function fetchMusic() {
       try {
         await props.loadRecentlyAdded();
         setMusicList(props.recentlyAdded)
-
       } catch (err) {
-        console.log(err)
       }
     }
 
@@ -71,6 +70,7 @@ const MusicList = (props) => {
 const mapStateToProps = state => {
   return {
     recentlyAdded: state.userReducer.recentlyAdded,
+
   }
 
 }

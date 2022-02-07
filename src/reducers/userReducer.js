@@ -7,19 +7,29 @@ const { CREATE_PLAYLIST,
   START_SELECTED_SONG,
   SUCCESS_SELECTED_SONG,
   FAILURE_SELECTED_SONG,
-  SET_PLAYING_TRUE,
-  SET_PLAYING_FALSE
+  SET_ISPLAYING,
+  SET_VOLUME,
+  TOGGLE_MUTE,
+  START_SET_AUDIO_TRACK,
+  SUCCESS_SET_AUDIO_TRACK,
+  FAILURE_SET_AUDIO_TRACK,
+
 } = types;
 
 const initialState = {
+  audioTrack: null,
+  error: null,
   token: '',
   userName: 'anon',
   userId: '',
   playlists: ['list1', 'list2', 'list3'],
+  lastPlayed: null,
   selectedSong: { name: null, length: 0 },
   recentlyAdded: null,
   isLoading: false,
-  playing: false,
+  isPlaying: false,
+  volume: .5,
+  isMute: false,
 }
 
 
@@ -60,16 +70,39 @@ const userReducer = (state = initialState, { type, payload }) => {
         ...state,
         isLoading: false,
       }
-    case SET_PLAYING_FALSE:
+    case SET_ISPLAYING:
       return {
         ...state,
-        playing: payload
+        isPlaying: payload
       }
-    case SET_PLAYING_TRUE:
+    case SET_VOLUME:
       return {
         ...state,
-        playing: payload
+        volume: payload
+      }
+    case TOGGLE_MUTE:
+      return {
+        ...state,
+        isMute: payload
+      }
 
+    case START_SET_AUDIO_TRACK:
+      return {
+        ...state,
+        isLoading: true,
+      }
+    case SUCCESS_SET_AUDIO_TRACK:
+
+      return {
+        ...state,
+        audioTrack: payload,
+        isLoading: false,
+      }
+    case FAILURE_SET_AUDIO_TRACK:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload
       }
 
     default:

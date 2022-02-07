@@ -7,11 +7,14 @@ const {
   START_RECENTLY_ADDED,
   SUCCESS_RECENTLY_ADDED,
   FAILURE_RECENTLY_ADDED,
-  START_SELECTED_SONG,
-  SUCCESS_SELECTED_SONG,
-  FAILURE_SELECTED_SONG,
-  SET_PLAYING_TRUE,
-  SET_PLAYING_FALSE
+  SET_ISPLAYING,
+  SET_VOLUME,
+  TOGGLE_MUTE,
+  START_SET_AUDIO_TRACK,
+  SUCCESS_SET_AUDIO_TRACK,
+  FAILURE_SET_AUDIO_TRACK,
+  SET_AUDIO_TRACK,
+  PLAY_AUDIO,
 }
   = types;
 
@@ -33,28 +36,37 @@ export const loadRecentlyAdded = () => dispatch => {
   axios
     .get(`${api}musiclist`)
     .then(res => {
-      dispatch({ type: SUCCESS_RECENTLY_ADDED, payload: res.data })
+      let songList = []
+      res.data.forEach(s => { songList.push({ "id": s.id, "title": s.title, "isPlaying": false }) })
+      dispatch({ type: SUCCESS_RECENTLY_ADDED, payload: songList })
       return true
     })
     .catch(err => {
+
       dispatch({ type: FAILURE_RECENTLY_ADDED, payload: err })
       return false
     })
 }
 
-export const playSelectedSong = (id) => dispatch => {
-  let res = `http://localhost:8090/audio/audios/${id}`
-  dispatch({ type: SUCCESS_SELECTED_SONG, payload: res})
+export const setAudioTrack = (song) => dispatch => {
+  dispatch({ type: START_SET_AUDIO_TRACK, payload: "start" })
+  dispatch({ type: SUCCESS_SET_AUDIO_TRACK, payload: `http://localhost:8090/audio/audios/${song.id}` })
 }
 
-export const setPlaying = (state) => dispatch => {
- if (state == false)
-  {
-    dispatch({type: SET_PLAYING_FALSE, payload: state})
 
-  }
-  else
-  {
-    dispatch({type: SET_PLAYING_TRUE, payload: state})
-  }
+export const setIsPlaying = (state) => dispatch => {
+  dispatch({ type: SET_ISPLAYING, payload: state })
+
+}
+
+export const setVolume = (volume) => dispatch => {
+  dispatch({ type: SET_VOLUME, payload: volume })
+
+
+}
+
+export const toggleMute = (isMute) => dispatch => {
+  dispatch({ type: TOGGLE_MUTE, payload: isMute })
+
+
 }

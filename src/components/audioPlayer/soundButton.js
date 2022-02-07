@@ -1,7 +1,8 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Icon } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react';
+import { setVolume, toggleMute } from "../../actions/userActions"
 
 
 
@@ -16,38 +17,32 @@ const Container = styled.div`
   align-items: center;
 
 `
+const VolumeBox = styled.div`
+  width:100px;
+  height: 40px;
+
+`
 
 const ImageCon = styled.img`
     width: 40px;
     height: 40%;
     `
 const SoundButton = (props) => {
-  const { audio , toggleVolume} = props
+
+  const { toggleVolume, audioMain } = props
   const [iconName, setIconName] = useState()
-  const [prevVolume, setPrevVolume] = useState()
-  
 
-  const mute = (event) => {
-    if (audio.volume > 0) {
-      var tempV = audio.volume
-      audio.volume = 0
-      setPrevVolume(tempV)
 
-    }
-    else {
-
-      audio.volume = prevVolume
-    }
-
-  }
 
 
   const volumeIcon = () => {
 
-    if (audio.volume == 0) {
+    if (audioMain.volume == 0 || props.isMute == true) {
       setIconName('volume off')
+
+      audioMain.volume = 0
     }
-    else if (audio.volume <= .5) {
+    else if (audioMain.volume <= .5) {
       setIconName('volume down')
 
     }
@@ -59,31 +54,35 @@ const SoundButton = (props) => {
   }
 
   useEffect(() => {
+    audioMain.volume = props.volume
     volumeIcon()
 
 
-  }, [])
+  }, [props.isMute, props.volume])
 
   return (
+
     <Icon.Group size='large' >
       <Icon size='small' color='black' name={iconName} onClick={() => {
-        mute()
+        props.toggleMute(!props.isMute)
         volumeIcon()
-           }}
-     onMouseOver= {() => {
-   toggleVolume()
-     }}
-    />
+      }}
+
+      />
     </Icon.Group>
+
   )
 }
 
 const mapStateToProps = state => {
   return {
     playList: state.userReducer.playList,
+    isMute: state.userReducer.isMute,
+    volume: state.userReducer.volume,
+    audioTrack: state.userReducer.audioTrack,
 
 
   }
 };
 
-export default connect(mapStateToProps, {})(SoundButton)
+export default connect(mapStateToProps, { setVolume, toggleMute })(SoundButton)
