@@ -7,15 +7,15 @@ import App from './App';
 
 import 'semantic-ui-css/semantic.min.css'
 import reportWebVitals from './reportWebVitals';
-import {createStore, applyMiddleware, compose} from 'redux';
-import {Provider} from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import combineReducers from './reducers/index.js';
 // Import redux persist
 import storage from 'redux-persist/lib/storage';
-import {persistStore, persistReducer} from 'redux-persist';
+import { persistStore, persistReducer } from 'redux-persist';
 //PersistGate wrapped around root component
-import {PersistGate} from 'redux-persist/integration/react';
+import { PersistGate } from 'redux-persist/integration/react';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const persistConfig = {
@@ -33,12 +33,12 @@ const persistor = persistStore(store);
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(
-    <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-            <App/>
-        </PersistGate>
-    </Provider>,
-    rootElement
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
+  </Provider>,
+  rootElement
 );
 
 reportWebVitals();

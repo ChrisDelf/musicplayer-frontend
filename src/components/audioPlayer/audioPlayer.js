@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ProgressBar from './progressBar';
 import SoundButton from './soundButton';
 import VolumePopup from './volumePopup';
-import { setPlaying } from '../../actions/userActions'
+import { setIsPlaying, setAudioTrack, setVolume } from '../../actions/userActions'
 
 
 
@@ -18,9 +18,13 @@ const Container = styled.div`
   align-items: center;
 
 `
+const VolumeBox = styled.div`
+  width:100px;
+  height: 40px;
 
+`
 const AudioPlayer = (props) => {
-  const [audio, setAudio] = useState(new Audio(props.selectedSong));
+  const { audioMain } = props
   const [duration, setDuration] = useState();
   const [currentTime, setCurrentTime] = useState();
   const [canvasWidth, setCanvasWidth] = useState(500);
@@ -30,51 +34,43 @@ const AudioPlayer = (props) => {
   const soundButtonPos = soundButtonRef.current
 
 
-  const toggleVolume = () => {
-    setIsVolumeOpen(!isVolumeOpen)
+  const toggleVolume = (isOpen) => {
+    if (isOpen == false) { }
+    else {
+
+
+    }
+    setIsVolumeOpen(isOpen)
+
 
   }
 
 
-  const toggle = () => props.setPlaying(!props.playing);
+
+  const toggle = () => props.setIsPlaying(!props.isPlaying);
 
 
-  // when a song pause the current audio
   useEffect(() => {
-    props.setPlaying(false)
-    audio.pause();
-    setAudio(new Audio(props.selectedSong))
-  },
-    [props.selectedSong]
-  );
-
-  // plays when the play button is played
-  useEffect(() => {
-    props.playing ? audio.play() : audio.pause();
-  },
-    [props.playing]
-  )
 
 
+  }, [audioMain.volume])
 
 
-  // when the song ends stop the song
-  useEffect(() => {
-    audio.addEventListener('ended', () => setPlaying(false));
-    return () => {
-      audio.removeEventListener('ended', () => setPlaying(false));
-    };
-  }, []);
 
   return (
 
     <Container>
-      <button onClick={toggle}> {props.playing ? "Pause" : "Play"}</button>
-      <ProgressBar audio={audio} setPlaying={setPlaying} />
-      <div className = "soundButton" ref={soundButtonRef}>
-      <SoundButton audio={audio} toggleVolume={toggleVolume}/>
+
+      <div className="soundButton" ref={soundButtonRef}>
+        {audioMain != null ? (<><button onClick={toggle}> {props.isPlaying ? "Pause" : "Play"}</button>
+          <ProgressBar audioMain={audioMain} /> </>) : (<></>)}
+
       </div>
-      {isVolumeOpen == true ? (<VolumePopup audio={audio} position={soundButtonPos} />) : (<></>)}
+      <SoundButton audioMain={audioMain} />
+      {isVolumeOpen == true ? (<VolumePopup audioMain={audioMain} position={soundButtonPos} />) : (<VolumeBox onMouseOver={() => {
+        toggleVolume(true)
+      }} />
+      )}
 
     </Container>
 
@@ -85,12 +81,14 @@ const AudioPlayer = (props) => {
 
 const mapStateToProps = state => {
   return {
+
     playlists: state.userReducer.playlist,
     selectedSong: state.userReducer.selectedSong,
-    playing: state.userReducer.playing
+    isPlaying: state.userReducer.isPlaying,
+    volume: state.userReducer.volume
 
   }
 };
 
 
-export default connect(mapStateToProps, { setPlaying })(AudioPlayer)
+export default connect(mapStateToProps, { setIsPlaying, setAudioTrack, setVolume })(AudioPlayer)

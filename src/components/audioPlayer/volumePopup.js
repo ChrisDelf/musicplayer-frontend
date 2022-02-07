@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { setVolume, toggleMute } from "../../actions/userActions"
+import { connect } from 'react-redux';
+
 
 const PopupBox = styled.div`
 
@@ -31,10 +34,10 @@ const BarDiv = styled.div`
 `
 
 const VolumePopup = (props) => {
-  const { audio } = props
+  const { audioMain } = props
   const [barWidth, setBarWidth] = useState();
   const [eleLeft, setEleLeft] = useState();
-  const [eleWidth, setEleWidth] = useState();
+  const [eleWidth, setEleWidth] = useState(150);
   const [eleBottom, setEleBottom] = useState();
   const [eleheight, setEleHeight] = useState();
   const [toggle, setToggle] = useState(false)
@@ -42,15 +45,14 @@ const VolumePopup = (props) => {
 
   const [popUpPosition, setPopUpPosition] = useState();
 
+
+
   // going to create our boundries for our bar
 
   const createContainer = () => {
     setEleWidth(ref.current.clientWidth)
     setEleLeft(ref.current.getBoundingClientRect().left)
-
-
-    setBarWidth(audio.volume * eleWidth)
-    console.log(eleWidth)
+    setBarWidth(props.volume * eleWidth)
 
   }
   const changeVolume = (event) => {
@@ -59,21 +61,24 @@ const VolumePopup = (props) => {
     var xDif = mouseCoordinates.x - eleLeft
 
     var newVolume = xDif / eleWidth
-
-    updateVolume(newVolume)
-  }
-
-  const updateVolume = (newVolume) => {
-
-    audio.volume = newVolume
+    props.setVolume(newVolume)
+    audioMain.volume = newVolume
     setToggle(!toggle)
-
-
   }
+
+
+
 
   useEffect(() => {
-    createContainer()
+    const tempVolume = audioMain.volume
+    setEleWidth(ref.current.clientWidth)
+    setEleLeft(ref.current.getBoundingClientRect().left)
+    setBarWidth(tempVolume * eleWidth)
+
+
   }, [toggle])
+
+
 
   return (
     <PopupBox background="red" onClick={(event) => { changeVolume(event) }} >
@@ -92,5 +97,14 @@ const VolumePopup = (props) => {
 
 }
 
+const mapStateToProps = state => {
+  return {
+    isMute: state.userReducer.isMute,
+    volume: state.userReducer.volume,
+  }
 
-export default VolumePopup;
+
+}
+
+
+export default connect(mapStateToProps, { setVolume, toggleMute })(VolumePopup);
