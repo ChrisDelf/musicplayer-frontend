@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import MenuBar from './menubar/menubar.js';
 import MusicList from './musicList/musicList.js';
 import AudioPlayer from './audioPlayer/audioPlayer';
-import { setIsPlaying, setAudioTrack, setVolume } from '../actions/userActions'
+import { setIsPlaying, setAudioTrack, setVolume, togglePlayFromList } from '../actions/userActions'
 // Here lives the primary state for the audio Object
 const audio = new Audio();
 
@@ -36,17 +36,32 @@ const Homepage = (props) => {
   // For when the audio track is changed
   useEffect(() => {
     if (props.audioTrack != null) {
-      audioMain.src = props.audioTrack
+
+
+
+      audioMain.src = props.audioTrack.src
       audioMain.volume = props.volume
+
+      if (props.playFromList == true) {
+
+        props.setIsPlaying(true)
+
+      }
+
+
+
     }
 
   }, [props.audioTrack])
 
   // handles the play logic
   useEffect(() => {
-    if (audioMain.src != null) {
+    console.log("asfasdf")
+    if (audioMain.src != null && audioMain.src == props.audioTrack.src) {
       props.isPlaying ? audioMain.play() : audioMain.pause();
+      props.togglePlayFromList(props.isPlaying)
     }
+
 
 
   }, [props.isPlaying])
@@ -66,7 +81,7 @@ const Homepage = (props) => {
         <Container>
           <MenuBar history={props.history} />
         </Container>
-        <MusicList />
+        <MusicList audioMain={audioMain} />
 
       </MainCont>
       <AudioPlayer audioMain={audioMain} />
@@ -79,10 +94,11 @@ const mapStateToProps = state => {
     playlists: state.userReducer.playlist,
     audioTrack: state.userReducer.audioTrack,
     volume: state.userReducer.volume,
-    isPlaying: state.userReducer.isPlaying
+    isPlaying: state.userReducer.isPlaying,
+    playFromList: state.userReducer.playFromList
 
   }
 };
 
 
-export default connect(mapStateToProps, { setVolume, setAudioTrack, setIsPlaying })(Homepage);
+export default connect(mapStateToProps, { setVolume, setAudioTrack, setIsPlaying, togglePlayFromList })(Homepage);
