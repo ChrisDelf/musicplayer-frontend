@@ -28,6 +28,7 @@ const CellsContainer = styled.div`
 `
 
 const MusicList = (props) => {
+  const { audioMain } = props
 
   const [musicList, setMusicList] = useState([]);
   useEffect(() => {
@@ -52,7 +53,7 @@ const MusicList = (props) => {
         {musicList != null ? (
           <>
             {musicList.map(s => (
-              <SongCell song={s} />
+              <SongCell song={s} audioMain={audioMain} />
             ))}
           </>
         ) : (<>Not loaded</>)}

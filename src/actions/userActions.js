@@ -15,11 +15,13 @@ const {
   FAILURE_SET_AUDIO_TRACK,
   SET_AUDIO_TRACK,
   PLAY_AUDIO,
+  SET_PLAY_FROM_LIST
 }
   = types;
 
 
 const api = "http://localhost:8090/api/user/";
+const srcAPI = `http://localhost:8090/audio/audios/`
 
 export const createPlaylist = (name) => dispatch => {
 
@@ -49,8 +51,14 @@ export const loadRecentlyAdded = () => dispatch => {
 }
 
 export const setAudioTrack = (song) => dispatch => {
+
+  let tempSong = {
+    src: `http://localhost:8090/audio/audios/${song.id}`,
+    title: song.title
+
+  }
   dispatch({ type: START_SET_AUDIO_TRACK, payload: "start" })
-  dispatch({ type: SUCCESS_SET_AUDIO_TRACK, payload: `http://localhost:8090/audio/audios/${song.id}` })
+  dispatch({ type: SUCCESS_SET_AUDIO_TRACK, payload: tempSong })
 }
 
 
@@ -69,4 +77,8 @@ export const toggleMute = (isMute) => dispatch => {
   dispatch({ type: TOGGLE_MUTE, payload: isMute })
 
 
+}
+
+export const togglePlayFromList = (data) => dispatch => {
+  dispatch({ type: SET_PLAY_FROM_LIST, payload: data })
 }
