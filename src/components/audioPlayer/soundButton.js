@@ -24,7 +24,7 @@ const VolumeBox = styled.div`
 `
 
 const ImageCon = styled.img`
-    width: 40px;
+    width: 40px
     height: 40%;
     `
 const SoundButton = (props) => {
@@ -62,7 +62,7 @@ const SoundButton = (props) => {
 
   return (
 
-    <Icon.Group size='large' >
+    <Icon.Group size='large' onMouseEnter={() => { props.toggleVolume(true) }}>
       <Icon size='small' color='black' name={iconName} onClick={() => {
         props.toggleMute(!props.isMute)
         volumeIcon()

@@ -41,7 +41,7 @@ const AudioPlayer = (props) => {
 
     }
     setIsVolumeOpen(isOpen)
-
+    console.log("affasdf")
 
   }
 
@@ -66,11 +66,8 @@ const AudioPlayer = (props) => {
           <ProgressBar audioMain={audioMain} /> </>) : (<></>)}
 
       </div>
-      <SoundButton audioMain={audioMain} />
-      {isVolumeOpen == true ? (<VolumePopup audioMain={audioMain} position={soundButtonPos} />) : (<VolumeBox onMouseOver={() => {
-        toggleVolume(true)
-      }} />
-      )}
+      <SoundButton audioMain={audioMain} toggleVolume={toggleVolume} />
+      {isVolumeOpen == true ? (<VolumePopup audioMain={audioMain} position={soundButtonPos} toggleVolume={toggleVolume} />) : (<></>)}
 
     </Container>
 
