@@ -81,9 +81,9 @@ const VolumePopup = (props) => {
 
 
   return (
-    <PopupBox background="red" onClick={(event) => { changeVolume(event) }} >
+    <PopupBox background="red" onMouseLeave={() => { props.toggleVolume(false) }} onClick={(event) => { changeVolume(event) }} >
       <div ref={ref}>
-        <Container>
+        <Container >
           <VolumeDiv >
             <BarDiv style={{ width: `${barWidth}px` }} />
           </VolumeDiv>

@@ -56,7 +56,6 @@ const Homepage = (props) => {
 
   // handles the play logic
   useEffect(() => {
-    console.log("asfasdf")
     if (audioMain.src != null && audioMain.src == props.audioTrack.src) {
       props.isPlaying ? audioMain.play() : audioMain.pause();
       props.togglePlayFromList(props.isPlaying)
