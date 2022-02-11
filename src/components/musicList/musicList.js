@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { loadRecentlyAdded } from '../../actions/userActions'
+import { loadRecentlyAdded, selectPlaylist } from '../../actions/userActions'
 import SongCell from '../songCell/songCell'
 
 const Container = styled.div`
@@ -31,18 +31,24 @@ const MusicList = (props) => {
   const { audioMain } = props
 
   const [musicList, setMusicList] = useState([]);
-  useEffect(() => {
 
+  useEffect(() => {
     async function fetchMusic() {
       try {
         await props.loadRecentlyAdded();
         setMusicList(props.recentlyAdded)
+
       } catch (err) {
       }
     }
 
-    fetchMusic();
+    fetchMusic()
+
   }, [])
+
+
+
+
 
 
 
@@ -76,5 +82,5 @@ const mapStateToProps = state => {
 
 }
 
-export default connect(mapStateToProps, { loadRecentlyAdded })(MusicList)
+export default connect(mapStateToProps, { loadRecentlyAdded, selectPlaylist })(MusicList)
 
