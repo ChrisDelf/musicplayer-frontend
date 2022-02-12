@@ -15,7 +15,9 @@ const {
   FAILURE_SET_AUDIO_TRACK,
   SET_AUDIO_TRACK,
   PLAY_AUDIO,
-  SET_PLAY_FROM_LIST
+  SET_PLAY_FROM_LIST,
+  SET_SELECTED_PLAYLIST,
+
 }
   = types;
 
@@ -35,6 +37,7 @@ export const createPlaylist = (name) => dispatch => {
 export const loadRecentlyAdded = () => dispatch => {
 
   dispatch({ type: START_RECENTLY_ADDED })
+
   axios
     .get(`${api}musiclist`)
     .then(res => {
@@ -80,5 +83,12 @@ export const toggleMute = (isMute) => dispatch => {
 }
 
 export const togglePlayFromList = (data) => dispatch => {
+
   dispatch({ type: SET_PLAY_FROM_LIST, payload: data })
 }
+
+export const selectPlaylist = (data) => dispatch => {
+  dispatch({ type: SET_SELECTED_PLAYLIST, payload: data })
+}
+
+

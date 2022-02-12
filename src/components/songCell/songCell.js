@@ -62,7 +62,8 @@ const mapStateToProps = state => {
     isPlaying: state.userReducer.isPlaying,
     volume: state.userReducer.volume,
     audioTrack: state.userReducer.audioTrack,
-    playFromList: state.userReducer.playFromList
+    playFromList: state.userReducer.playFromList,
+
 
   }
 }
