@@ -27,7 +27,7 @@ const MenuBar = props => {
         <input
           id='text'
           name='song'
-          defualtValue='Song name here' /></div>
+          placeholder='Song name here' /></div>
 
     </Container>
 

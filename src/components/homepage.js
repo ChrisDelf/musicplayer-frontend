@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import MenuBar from './menubar/menubar.js';
 import MusicList from './musicList/musicList.js';
 import AudioPlayer from './audioPlayer/audioPlayer';
-import { setIsPlaying, setAudioTrack, setVolume, togglePlayFromList } from '../actions/userActions'
+import { setIsPlaying, setAudioTrack, setVolume, togglePlayFromList, updatePlaylistPlay } from '../actions/userActions'
 // Here lives the primary state for the audio Object
 const audio = new Audio();
 
@@ -77,16 +77,23 @@ const Homepage = (props) => {
   return (
     <>
       <MainCont>
+
         <Container>
           <MenuBar history={props.history} />
+
         </Container>
         <MusicList audioMain={audioMain} />
 
+
       </MainCont>
       <AudioPlayer audioMain={audioMain} />
+
     </>
   )
 };
+
+
+
 
 const mapStateToProps = state => {
   return {
@@ -100,4 +107,4 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps, { setVolume, setAudioTrack, setIsPlaying, togglePlayFromList })(Homepage);
+export default connect(mapStateToProps, { setVolume, setAudioTrack, updatePlaylistPlay, setIsPlaying, togglePlayFromList })(Homepage);

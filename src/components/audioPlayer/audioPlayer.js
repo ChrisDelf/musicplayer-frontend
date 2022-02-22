@@ -41,7 +41,6 @@ const AudioPlayer = (props) => {
 
     }
     setIsVolumeOpen(isOpen)
-    console.log("affasdf")
 
   }
 

@@ -27,18 +27,34 @@ const ButtonContainer = styled.div`
 `
 
 const SongCell = (props) => {
-  const { song, audioMain } = props
+  const { song } = props
 
-  const toggle = () => {
+  const updatePlaylistPlayButton = (id, res) => {
+    let tempList = props.selectedPlaylist
+    for (let i = 0; i < tempList.length; i++) {
+      if (tempList[i].pId == id) {
+        tempList[i].isPlaying = res
+      }
+      else {
+        tempList[i].isPlaying = !res
+      }
 
-    if (props.playFromList == false) {
+    }
+    return tempList
+
+
+
+  }
+
+  const toggle = (id) => {
+    if (props.playFromList == false || props.playFromList == null) {
       props.togglePlayFromList(true)
       props.setAudioTrack(song)
+
 
     }
     else if (props.playFromList == true) {
       props.togglePlayFromList(false)
-
       props.setIsPlaying(false)
 
     }
@@ -47,9 +63,10 @@ const SongCell = (props) => {
 
   return (
     <Cell>
-      <h>{song.title}</h>
+
+      <div>{song.title}</div>
       <ButtonContainer>
-        <button onClick={toggle}> {props.playFromList ? "Pause" : "Play"}</button>
+        <button onClick={() => { toggle(song.pId) }}> {props.playFromList ? "Pause" : "Play"}</button>
         <button>D</button>
       </ButtonContainer>
     </Cell>
@@ -63,6 +80,7 @@ const mapStateToProps = state => {
     volume: state.userReducer.volume,
     audioTrack: state.userReducer.audioTrack,
     playFromList: state.userReducer.playFromList,
+    selectedPlaylist: state.userReducer.selectedPlaylist
 
 
   }

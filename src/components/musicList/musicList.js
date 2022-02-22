@@ -30,20 +30,21 @@ const CellsContainer = styled.div`
 const MusicList = (props) => {
   const { audioMain } = props
 
-  const [musicList, setMusicList] = useState([]);
 
   useEffect(() => {
-    async function fetchMusic() {
-      try {
-        await props.loadRecentlyAdded();
-        setMusicList(props.recentlyAdded)
 
-      } catch (err) {
+    if (props.selectedPlaylist == null) {
+      async function fetchMusic() {
+        try {
+          await props.loadRecentlyAdded();
+
+
+        } catch (err) {
+        }
       }
+
+      fetchMusic()
     }
-
-    fetchMusic()
-
   }, [])
 
 
@@ -56,10 +57,13 @@ const MusicList = (props) => {
 
     <Container>
       <CellsContainer>
-        {musicList != null ? (
+        {props.selectedPlaylist != null ? (
+
           <>
-            {musicList.map(s => (
-              <SongCell song={s} audioMain={audioMain} />
+            <h1>{props.selectedPlaylist.name}</h1>
+
+            {props.selectedPlaylist.list.map(s => (
+              <SongCell key={s.id} song={s} />
             ))}
           </>
         ) : (<>Not loaded</>)}
@@ -77,6 +81,7 @@ const MusicList = (props) => {
 const mapStateToProps = state => {
   return {
     recentlyAdded: state.userReducer.recentlyAdded,
+    selectedPlaylist: state.userReducer.selectedPlaylist,
 
   }
 
