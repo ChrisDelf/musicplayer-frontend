@@ -17,6 +17,7 @@ const {
   PLAY_AUDIO,
   SET_PLAY_FROM_LIST,
   SET_SELECTED_PLAYLIST,
+  SET_PLAYLIST_PLAY
 
 }
   = types;
@@ -42,8 +43,14 @@ export const loadRecentlyAdded = () => dispatch => {
     .get(`${api}musiclist`)
     .then(res => {
       let songList = []
-      res.data.forEach(s => { songList.push({ "id": s.id, "title": s.title, "isPlaying": false }) })
-      dispatch({ type: SUCCESS_RECENTLY_ADDED, payload: songList })
+      let pId = 0
+      res.data.forEach(s => {
+
+        songList.push({ pId: pId, id: s.id, title: s.title, isPlaying: false })
+        pId += 1
+      })
+      let tempPlayList = { name: "RecentlyAdded", list: songList }
+      dispatch({ type: SUCCESS_RECENTLY_ADDED, payload: tempPlayList })
       return true
     })
     .catch(err => {
@@ -67,6 +74,13 @@ export const setAudioTrack = (song) => dispatch => {
 
 export const setIsPlaying = (state) => dispatch => {
   dispatch({ type: SET_ISPLAYING, payload: state })
+
+}
+
+export const updatePlaylistPlay = (playlist) => dispatch => {
+
+  dispatch({ type: SET_PLAYLIST_PLAY, payload: playlist })
+
 
 }
 

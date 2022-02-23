@@ -14,9 +14,12 @@ const { CREATE_PLAYLIST,
   SUCCESS_SET_AUDIO_TRACK,
   FAILURE_SET_AUDIO_TRACK,
   SET_SELECTED_PLAYLIST,
-  SET_PLAY_FROM_LIST
+  SET_PLAY_FROM_LIST,
+  SET_PLAYLIST_PLAY,
+
 
 } = types;
+// { name: "PlayList", list: [{ id: 1, title: 'test', isPlaying: false }, { id: 2, title: 'test', isPlaying: false }] },
 
 const initialState = {
   audioTrack: { src: null, src: null },
@@ -33,6 +36,7 @@ const initialState = {
   volume: .5,
   isMute: false,
   playFromList: null,
+  playlistName: null,
 }
 
 
@@ -51,7 +55,7 @@ const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isLoading: false,
-        recentlyAdded: payload
+        selectedPlaylist: payload
       }
     case FAILURE_RECENTLY_ADDED:
       return {
@@ -119,6 +123,12 @@ const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         selectedPlaylist: payload,
+      }
+
+    case SET_PLAYLIST_PLAY:
+      return {
+        ...state,
+        selectedPlayList: payload
       }
 
     default:
