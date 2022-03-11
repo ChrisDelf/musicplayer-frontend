@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { Container } from './menubarStyle';
-
+import { useNavigate } from "react-router-dom";
 const Button = styled.button`
   
   color:${props => props.theme.colors.primary.light};
@@ -12,17 +11,19 @@ const Button = styled.button`
 
 
 const MenuBar = props => {
+  let navigate = useNavigate();
 
-
-
+  const onClickPush = (path) => {
+    navigate(path)
+  }
 
   return (
 
     <Container>
-      <Button onClick={() => props.history.push("/")} >Home</Button>
+      <Button onClick={() => onClickPush('/')} >Home</Button>
       <Button>Playlist</Button>
       <Button>Likes</Button>
-      <Button onClick={() => props.history.push("/downloader/")}>Downloader</Button>
+      <Button onClick={() => onClickPush('/downloader/')}>Downloader</Button>
       <div>Search
         <input
           id='text'

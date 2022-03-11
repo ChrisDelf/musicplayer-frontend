@@ -29,9 +29,9 @@ const FormBtn = styled.button`
 background-color: orange;
 
 `
- function DownLoader ()
+const DownLoader = props => {
 
-{
+
 
 
 

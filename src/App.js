@@ -1,15 +1,16 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import {
-  BrowserRouter as Router,
   Route,
-  Routes as Switch,
+  Routes,
   Redirect
 } from 'react-router-dom';
 import './App.css';
 
 
+
 // importing components
+import MenuBar from './components/menubar/menubar'
 import Homepage from './components/homepage.js';
 import DownLoader from './components/downloader/downloader.js'
 
@@ -31,18 +32,17 @@ const theme = {
 
 };
 
+
+
 function App() {
 
   return (
     <ThemeProvider theme={theme}>
-     
-        <Router>
-          <Switch>
-            <Route path="/" element={<Homepage/>} />
-            <Route path="/downloader/" element={<DownLoader/>} />
-          </Switch>
-        </Router>
-     
+      <MenuBar />
+      <Routes>
+        <Route exact path="/" element={<Homepage />} />
+        <Route path="/downloader/" element={<DownLoader />} />
+      </Routes>
     </ThemeProvider>
   )
 }
