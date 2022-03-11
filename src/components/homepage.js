@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 //import Playlists from './playlist/playlist';
-import MenuBar from './menubar/menubar.js';
 import MusicList from './musicList/musicList.js';
 import AudioPlayer from './audioPlayer/audioPlayer';
 import { setIsPlaying, setAudioTrack, setVolume, togglePlayFromList, updatePlaylistPlay } from '../actions/userActions'
@@ -31,8 +30,6 @@ const MainCont = styled.div`
 
 const Homepage = (props) => {
   const audioMain = audio
-
-
   // For when the audio track is changed
   useEffect(() => {
     if (props.audioTrack != null) {
@@ -67,6 +64,7 @@ const Homepage = (props) => {
 
   // handles when the song Ends
   useEffect(() => {
+
     audioMain.addEventListener('ended', () => setIsPlaying(false));
     return () => {
       audioMain.removeEventListener('ended', () => setIsPlaying(false));
@@ -76,10 +74,9 @@ const Homepage = (props) => {
     , [])
   return (
     <>
-      <MainCont>
+      <MainCont >
 
         <Container>
-          <MenuBar history={props.history} />
 
         </Container>
         <MusicList audioMain={audioMain} />

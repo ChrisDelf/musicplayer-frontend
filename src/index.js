@@ -1,10 +1,12 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import history from './history'
+import {
+  BrowserRouter
+} from 'react-router-dom'
 import './index.css';
 import App from './App';
-
-
 import 'semantic-ui-css/semantic.min.css'
 import reportWebVitals from './reportWebVitals';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -35,7 +37,9 @@ const rootElement = document.getElementById('root');
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </PersistGate>
   </Provider>,
   rootElement
