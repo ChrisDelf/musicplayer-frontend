@@ -4,9 +4,7 @@ import styled from 'styled-components';
 //import Playlists from './playlist/playlist';
 import MusicList from './musicList/musicList.js';
 import AudioPlayer from './audioPlayer/audioPlayer';
-import { setIsPlaying, setAudioTrack, setVolume, togglePlayFromList, updatePlaylistPlay } from '../actions/userActions'
-// Here lives the primary state for the audio Object
-const audio = new Audio();
+
 
 
 const Container = styled.div`
@@ -29,61 +27,15 @@ const MainCont = styled.div`
 `;
 
 const Homepage = (props) => {
-  const audioMain = audio
-  // For when the audio track is changed
-  useEffect(() => {
-    if (props.audioTrack != null) {
-
-
-
-      audioMain.src = props.audioTrack.src
-      audioMain.volume = props.volume
-
-      if (props.playFromList == true) {
-
-        props.setIsPlaying(true)
-
-      }
-
-
-
-    }
-
-  }, [props.audioTrack])
-
-  // handles the play logic
-  useEffect(() => {
-    if (audioMain.src != null && audioMain.src == props.audioTrack.src) {
-      props.isPlaying ? audioMain.play() : audioMain.pause();
-      props.togglePlayFromList(props.isPlaying)
-    }
-
-
-
-  }, [props.isPlaying])
-
-  // handles when the song Ends
-  useEffect(() => {
-
-    audioMain.addEventListener('ended', () => setIsPlaying(false));
-    return () => {
-      audioMain.removeEventListener('ended', () => setIsPlaying(false));
-    };
-
-  }
-    , [])
+  const { audioMain } = props
   return (
     <>
       <MainCont >
 
-        <Container>
-
-        </Container>
         <MusicList audioMain={audioMain} />
 
 
       </MainCont>
-      <AudioPlayer audioMain={audioMain} />
 
     </>
   )
@@ -92,16 +44,6 @@ const Homepage = (props) => {
 
 
 
-const mapStateToProps = state => {
-  return {
-    playlists: state.userReducer.playlist,
-    audioTrack: state.userReducer.audioTrack,
-    volume: state.userReducer.volume,
-    isPlaying: state.userReducer.isPlaying,
-    playFromList: state.userReducer.playFromList
-
-  }
-};
 
 
-export default connect(mapStateToProps, { setVolume, setAudioTrack, updatePlaylistPlay, setIsPlaying, togglePlayFromList })(Homepage);
+export default Homepage;
