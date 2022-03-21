@@ -60,6 +60,21 @@ export const loadRecentlyAdded = () => dispatch => {
     })
 }
 
+export const upLoadSong = (address) => {
+  let body = {
+    title: "",
+    address: address
+  }
+  axios
+    .post(`${api}upload`, body)
+    .then(res => {
+      return res
+    })
+    .catch(err => {
+      return err
+    })
+}
+
 export const setAudioTrack = (song) => dispatch => {
 
   let tempSong = {
@@ -76,6 +91,7 @@ export const setIsPlaying = (state) => dispatch => {
   dispatch({ type: SET_ISPLAYING, payload: state })
 
 }
+
 
 export const updatePlaylistPlay = (playlist) => dispatch => {
 

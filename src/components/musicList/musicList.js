@@ -33,7 +33,7 @@ const MusicList = (props) => {
 
   useEffect(() => {
 
-    if (props.selectedPlaylist == null) {
+    if (props.selectedPlaylist != null) {
       async function fetchMusic() {
         try {
           await props.loadRecentlyAdded();
