@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
 
 const Container = styled.div`
   justify-items: center;
@@ -30,9 +30,31 @@ background-color: orange;
 
 `
 const DownLoader = props => {
+  const [address, setAddress] = useState("");
+
+  const handleChange = (event) => {
+    setAddress(event.target.value)
+  }
+  const handleSubmit = (event) => {
+    event.preventDefault()
+
+    let body = {
+      title: "",
+      address: address
+    }
+    const api = "http://localhost:8090/api/user/";
+
+    axios
+      .post(`${api}upload`, body)
+      .then(res => {
+        return res
+      })
+      .catch(err => {
+        return err
+      })
 
 
-
+  }
 
 
 
@@ -42,10 +64,12 @@ const DownLoader = props => {
 
     <Container>
 
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Label>Paste the link to the song here</Label>
-        <Input type="text" id="address" />
-        <FormBtn>Download</FormBtn>
+        <label>
+          <Input type="text" value={address} onChange={handleChange} />
+        </label>
+        <FormBtn type="submit" >Download</FormBtn>
 
       </Form>
 
